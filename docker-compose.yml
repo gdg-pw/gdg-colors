@@ -1,0 +1,9 @@
+services:
+  gdgpw-colors:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gdgpw-colors
+    restart: always
+    ports:
+      - "8097:80"

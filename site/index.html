@@ -12,12 +12,29 @@
     html, body {
       height: 100%;
       font-family: 'DM Sans', sans-serif;
-      background-color: #3A3F43;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
-      background-size: 40px 40px;
+      background-color: #1E1F21;
       overflow: hidden;
+    }
+
+    .bar-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .code-symbol {
+      position: absolute;
+      opacity: 0.08;
+      animation: floatSymbol 15s infinite linear;
+      font-family: 'DM Mono', monospace;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    @keyframes floatSymbol {
+      from { transform: translateY(110vh) rotate(0deg); }
+      to   { transform: translateY(-20vh) rotate(360deg); }
     }
 
     /* ── Layout ── */
@@ -35,6 +52,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      overflow: hidden;
     }
 
     .bar-top img {
@@ -76,6 +95,8 @@
       transition: opacity 0.2s ease, transform 0.2s ease;
       pointer-events: none;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
 
     .col:hover .col-label {
@@ -125,6 +146,8 @@
       height: 80px;
       flex-shrink: 0;
       background: transparent;
+      position: relative;
+      overflow: hidden;
     }
 
     /* ── Toast ── */
@@ -166,6 +189,33 @@
       to   { opacity: 0; }
     }
 
+    /* ── Party mode (Konami) ── */
+    body.party .code-symbol {
+      animation-duration: 4s !important;
+      opacity: 0.28 !important;
+    }
+
+    body.party .col::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      animation: partyOverlay 1s infinite linear;
+    }
+
+    body.party .col:nth-child(4n+1)::before { animation-delay: 0s; }
+    body.party .col:nth-child(4n+2)::before { animation-delay: -0.25s; }
+    body.party .col:nth-child(4n+3)::before { animation-delay: -0.5s; }
+    body.party .col:nth-child(4n+4)::before { animation-delay: -0.75s; }
+
+    @keyframes partyOverlay {
+      0%   { background: rgba(66,133,244,0.22); }
+      25%  { background: rgba(231,70,57,0.22); }
+      50%  { background: rgba(251,188,4,0.22); }
+      75%  { background: rgba(52,168,83,0.22); }
+      100% { background: rgba(66,133,244,0.22); }
+    }
+
     /* ── Mobile ── */
     @media (max-width: 600px) {
       html, body { overflow: auto; }
@@ -200,12 +250,15 @@
 
 <div class="page">
   <div class="bar-top">
+    <div class="bar-canvas" id="bg-canvas-top"></div>
     <img src="./logo.svg" alt="GDG Logo" />
   </div>
 
   <div class="palette" id="palette"></div>
 
-  <div class="bar-bottom"></div>
+  <div class="bar-bottom">
+    <div class="bar-canvas" id="bg-canvas-bottom"></div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -303,6 +356,53 @@
 
     palette.appendChild(col);
   });
+
+  const bgColors = ['#4285F4', '#E74639', '#FBBC04', '#34A853'];
+  const bgSymbols = ['{ }', '< >', '[ ]', ';;', 'if()', '=>', 'null', 'git'];
+
+  function spawnSymbol(canvas) {
+    const span = document.createElement('span');
+    span.className = 'code-symbol';
+    span.innerText = bgSymbols[Math.floor(Math.random() * bgSymbols.length)];
+    span.style.color = bgColors[Math.floor(Math.random() * bgColors.length)];
+    span.style.left = Math.random() * 100 + 'vw';
+    span.style.animationDuration = (Math.random() * 8 + 12) + 's';
+    span.style.animationDelay = -(Math.random() * 20) + 's';
+    canvas.appendChild(span);
+  }
+
+  const bgTop    = document.getElementById('bg-canvas-top');
+  const bgBottom = document.getElementById('bg-canvas-bottom');
+  for (let i = 0; i < 14; i++) spawnSymbol(bgTop);
+  for (let i = 0; i < 5;  i++) spawnSymbol(bgBottom);
+
+  // Easter egg: Konami code
+  const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let konamiIdx = 0;
+  let partyActive = false;
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === KONAMI[konamiIdx]) {
+      konamiIdx++;
+      if (konamiIdx === KONAMI.length) {
+        activatePartyMode();
+        konamiIdx = 0;
+      }
+    } else {
+      konamiIdx = (e.key === KONAMI[0]) ? 1 : 0;
+    }
+  });
+
+  function activatePartyMode() {
+    if (partyActive) return;
+    partyActive = true;
+    document.body.classList.add('party');
+    showToast('🎉 easter egg odkryty');
+    setTimeout(() => {
+      document.body.classList.remove('party');
+      partyActive = false;
+    }, 5000);
+  }
 </script>
 </body>
 </html>
