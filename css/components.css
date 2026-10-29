@@ -1,0 +1,76 @@
+/* Komponenty: paleta (paski), toast */
+
+/* ---------- Paleta: pionowe paski na komputerze ---------- */
+.palette { flex: 1; min-height: 420px; display: flex; }
+
+.swatch {
+  flex: 1; min-width: 0;
+  position: relative; overflow: hidden;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding: 0 0 1.5rem;
+  border: 0; border-radius: 0;
+  font: inherit; color: inherit;
+  cursor: pointer;
+  transition: flex 0.25s cubic-bezier(.4, 0, .2, 1);
+}
+.swatch:hover, .swatch:focus-visible { flex: 1.8; }
+.swatch:focus-visible { outline: 3px solid currentColor; outline-offset: -6px; }
+
+/* Napis od dołu: HEX zawsze, nazwa i ikonka po najechaniu */
+.sw-label {
+  display: flex; flex-direction: column-reverse; align-items: center; gap: 0.6rem;
+  pointer-events: none;
+}
+.sw-hex, .sw-name { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+.sw-hex  { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; opacity: 0.75; transition: opacity 0.2s; }
+.sw-name { font-size: 0.8rem; opacity: 0; transition: opacity 0.2s; }
+.sw-icon { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.15); opacity: 0; transition: opacity 0.2s; }
+.sw-icon svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.swatch:hover .sw-hex, .swatch:focus-visible .sw-hex { opacity: 1; }
+.swatch:hover .sw-name, .swatch:hover .sw-icon,
+.swatch:focus-visible .sw-name, .swatch:focus-visible .sw-icon { opacity: 1; }
+
+/* Tablet: bez myszki nie ma najechania, więc nazwy widać od razu */
+@media (hover: none) {
+  .sw-name { opacity: 0.8; }
+}
+
+/* Błysk po skopiowaniu */
+.swatch.flash::after {
+  content: ""; position: absolute; inset: 0;
+  background: rgba(255,255,255,0.3);
+  animation: flashOut 0.4s ease forwards;
+  pointer-events: none;
+}
+@keyframes flashOut { from { opacity: 1; } to { opacity: 0; } }
+
+/* ---------- Paleta: poziome paski na telefonie ---------- */
+@media (max-width: 700px) {
+  .palette { flex-direction: column; min-height: 0; }
+  .swatch { flex: none; height: 56px; padding: 0 1.25rem; align-items: center; justify-content: flex-start; }
+  .swatch:hover, .swatch:focus-visible { flex: none; }
+  .sw-label { flex-direction: row; width: 100%; gap: 0.75rem; }
+  .sw-hex, .sw-name { writing-mode: horizontal-tb; transform: none; opacity: 1; }
+  .sw-hex { font-size: 0.9rem; }
+  .sw-name { font-size: 0.85rem; opacity: 0.7; }
+  .sw-icon { margin-left: auto; opacity: 0.6; background: none; }
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed; bottom: 2.5rem; left: 50%; z-index: 100;
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.55rem 1.2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  font-size: 0.9rem; white-space: nowrap;
+  opacity: 0; transform: translateX(-50%) translateY(12px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast b { font-family: var(--font-mono); }
+.toast-dot { width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--border); flex-shrink: 0; }

@@ -1,0 +1,33 @@
+/* Układ: kontener, header, hero, paleta na resztę ekranu, footer */
+
+.container { max-width: var(--width); margin: 0 auto; padding: 0 1.25rem; }
+
+/* Header */
+.header {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--bg-dark) var(--header-opacity), transparent);
+  -webkit-backdrop-filter: blur(var(--header-blur));
+  backdrop-filter: blur(var(--header-blur));
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  display: flex; justify-content: space-between; align-items: center; height: 60px;
+  max-width: calc(var(--width) + var(--header-shift) * 2);  /* szerszy header = logo wędruje na bok */
+}
+.brand { display: flex; align-items: center; gap: 0.7rem; color: var(--text-main); }
+.brand:hover { color: var(--text-main); }
+.brand-text { font-size: 0.95rem; font-weight: 600; line-height: 1.2; }
+.brand-text small { font-size: inherit; font-weight: 400; color: var(--text-muted); }
+
+/* Hero + paleta wypełniają pierwszy ekran, footer jest pod spodem */
+main { min-height: calc(100vh - 61px); min-height: calc(100svh - 61px); display: flex; flex-direction: column; }
+.hero { padding: 3.5rem 0 2.5rem; text-align: center; }
+.hero p { margin-top: 1rem; }
+
+/* Footer */
+.footer { padding: 2rem 0; border-top: 1px solid var(--border); text-align: center; }
+
+@media (max-width: 700px) {
+  main { min-height: 0; }
+  .hero { padding: 2.5rem 0 2rem; }
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paleta kolorów | GDG on Campus PW</title>
+  <meta name="description" content="Paleta kolorów GDG on Campus PW. Kliknij kolor, żeby skopiować HEX.">
+
+  <!-- Podgląd linku (Discord, Messenger, FB, LinkedIn). og:url i og:image muszą mieć pełny adres -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="GDG on Campus PW">
+  <meta property="og:locale" content="pl_PL">
+  <meta property="og:title" content="Paleta kolorów GDG on Campus PW">
+  <meta property="og:description" content="Kliknij kolor, żeby skopiować HEX.">
+  <meta property="og:url" content="https://colors.gdgpw.pl/">
+  <meta property="og:image" content="https://colors.gdgpw.pl/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Logo GDG on Campus PW i napis Paleta kolorów">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon.png">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+
+  <!-- Fonty z Google Fonts: Google Sans Flex (tekst) + Google Sans Code (HEX). Zmiana też w css/variables.css -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;600;700;800&family=Google+Sans+Code:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Kolejność ma znaczenie: variables -> base -> layout -> components -> effects -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/effects.css">
+</head>
+<body>
+
+  <!-- Tło z pływającymi symbolami (wypełnia js/effects.js) -->
+  <div id="bg-canvas"></div>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="https://gdgpw.pl"><img class="logo-img" src="assets/logo-mark.webp" alt=""><span class="brand-text">Google Developer Group<br><small>on Campus PW</small></span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Paleta kolorów<br><span class="gradient-text">GDG on Campus PW</span></h1>
+        <p class="muted">Kliknij kolor, żeby skopiować HEX.</p>
+      </div>
+    </section>
+
+    <!-- Paski wypełnia js/palette.js z COLORS (js/data.js) -->
+    <div id="palette" class="palette"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <!-- Socials: usuń cały <a>...</a>, żeby wyłączyć -->
+      <div class="socials">
+        <a class="social-link" href="https://gdg.community.dev/gdg-on-campus-politechnika-warszawska-warsaw-poland/" target="_blank" rel="noopener">
+          <img src="assets/socials/gdg.svg" width="22" height="22" alt=""><span>GDG Community</span>
+        </a>
+        <a class="social-link" href="https://www.instagram.com/gdg_pw/" target="_blank" rel="noopener">
+          <img src="assets/socials/instagram.svg" width="22" height="22" alt=""><span>Instagram</span>
+        </a>
+        <a class="social-link" href="https://www.facebook.com/gdg.pw" target="_blank" rel="noopener">
+          <img src="assets/socials/facebook.svg" width="22" height="22" alt=""><span>Facebook</span>
+        </a>
+        <a class="social-link" href="https://discord.com/invite/vNW4vXVwqH" target="_blank" rel="noopener">
+          <img src="assets/socials/discord.svg" width="22" height="22" alt=""><span>Discord</span>
+        </a>
+        <a class="social-link" href="https://www.linkedin.com/company/google-developer-group-pw/" target="_blank" rel="noopener">
+          <img src="assets/socials/linkedin.svg" width="22" height="22" alt=""><span>LinkedIn</span>
+        </a>
+      </div>
+      <p class="muted small">GDG on Campus Politechnika Warszawska</p>
+    </div>
+  </footer>
+
+  <!-- Komunikat „Skopiowano” -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Zwykłe skrypty (nie moduły), żeby działało też po dwukliku na index.html -->
+  <script src="js/data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/palette.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

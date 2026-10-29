@@ -1,0 +1,4 @@
+// Start strony
+
+initPalette();
+initEffects();

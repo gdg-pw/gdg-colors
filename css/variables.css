@@ -1,0 +1,45 @@
+/* ==========================================================
+   ZMIENNE – tu zmieniasz wygląd całej strony
+   Paleta: GDG (kolory Google na ciemnym tle)
+   ========================================================== */
+
+:root {
+  /* --- Kolory GDG --- */
+  --blue:   #4285F4;
+  --red:    #E74639;
+  --yellow: #FBBC04;
+  --green:  #34A853;
+
+  /* --- Tła i tekst --- */
+  --bg:         #181818;   /* tło strony */
+  --bg-dark:    #121212;   /* header, pole wyniku (ciemniej) */
+  --bg-card:    #202020;   /* karty. inne: var(--bg) = takie same jak tło */
+  --bg-chip:    #2e2e2e;   /* małe plakietki (historia, code) */
+  --border:     #5F6468;   /* ramki */
+
+  --text-main:  #E8EAED;
+  --text-muted: #9AA0A6;
+
+  /* ==========================================================
+     UŻYWANE W STRONIE – podmieniaj tylko to
+     ========================================================== */
+  --primary:    var(--green);     /* główny kolor (przyciski, akcenty). inne: var(--blue), var(--yellow), var(--red) */
+  --secondary:  var(--blue);      /* drugi kolor (linki, hover kart). inne: var(--yellow), var(--red) */
+  --on-accent:  #181818;          /* tekst na kolorowym przycisku */
+
+  /* Gradient w nagłówku. Inne: (135deg, var(--blue), var(--green)) = 2 kolory */
+  --gradient: linear-gradient(45deg, var(--blue), var(--red), var(--yellow), var(--green));
+
+  /* --- Czcionki --- */
+  --font-sans: "Google Sans Flex", system-ui, sans-serif;    /* tekst */
+  --font-mono: "Google Sans Code", ui-monospace, monospace;  /* terminal, kod, symbole w tle, historia */
+
+  /* --- Wygląd --- */
+  --radius:  16px;    /* zaokrąglenie. 0 = ostre, 24px = bardzo okrągłe */
+  --gap:     1.5rem;  /* odstępy w siatkach */
+  --width:   1000px;  /* max szerokość treści */
+  --header-shift: 300px; /* o ile px logo i menu w headerze są bardziej z boku. 0 = jak treść, ujemne = bardziej do środka */
+  --header-blur: 25px;    /* rozmycie tła. 0px = brak */
+  --header-opacity: 65%;  /* krycie. 100% = pełne tło, 40% = bardziej szklane */
+  --glow:    0 0 24px color-mix(in srgb, var(--primary) 35%, transparent); /* poświata. "none" = wyłączona */
+}

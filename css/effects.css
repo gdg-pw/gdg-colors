@@ -1,0 +1,73 @@
+/* Efekty: tło z symbolami, logo, impreza (Konami), socials */
+
+/* ---------- Tło z pływającymi symbolami ---------- */
+#bg-canvas {
+  position: fixed; inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.code-symbol {
+  position: absolute;
+  opacity: 0.10;                       /* przezroczystość symboli */
+  font-size: 1.1rem;
+  font-family: var(--font-mono);
+  animation: floatSymbol 15s infinite linear;
+}
+@keyframes floatSymbol {
+  from { transform: translateY(110vh) rotate(0deg); }
+  to   { transform: translateY(-20vh) rotate(360deg); }
+}
+
+/* Treść nad tłem */
+main, .footer { position: relative; z-index: 1; }
+
+/* ---------- Logo w headerze ---------- */
+.logo-img { height: 48px; width: auto; display: block; transform: translateY(-11.5%); }   /* znak w headerze. Przesunięty w górę o corgiego nad nawiasami, żeby na środku headera były nawiasy, nie cały obrazek */
+
+/* ---------- Konami: paski migają kolorami GDG ---------- */
+body.party .code-symbol { opacity: 0.3 !important; animation-duration: 4s !important; }
+body.party .swatch::before {
+  content: ""; position: absolute; inset: 0;
+  pointer-events: none;
+  animation: partyOverlay 1s infinite linear;
+}
+body.party .swatch:nth-child(4n+2)::before { animation-delay: -0.25s; }
+body.party .swatch:nth-child(4n+3)::before { animation-delay: -0.5s; }
+body.party .swatch:nth-child(4n+4)::before { animation-delay: -0.75s; }
+@keyframes partyOverlay {
+  0%   { background: color-mix(in srgb, var(--blue)   22%, transparent); }
+  25%  { background: color-mix(in srgb, var(--red)    22%, transparent); }
+  50%  { background: color-mix(in srgb, var(--yellow) 22%, transparent); }
+  75%  { background: color-mix(in srgb, var(--green)  22%, transparent); }
+  100% { background: color-mix(in srgb, var(--blue)   22%, transparent); }
+}
+
+/* ---------- Socials (footer) ---------- */
+.socials { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.social-link {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-main); font-size: 0.88rem;
+  opacity: 0.65;
+  transition: all 0.3s ease;
+}
+.social-link:hover {
+  opacity: 1; color: var(--text-main);
+  border-color: var(--text-main);
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.05);
+}
+
+@media (max-width: 600px) {
+  .logo-img { height: 40px; }
+  .social-link span { display: none; }
+}
+
+/* ---------- Mniej ruchu, gdy system o to prosi ---------- */
+@media (prefers-reduced-motion: reduce) {
+  #bg-canvas { display: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

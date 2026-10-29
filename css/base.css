@@ -1,0 +1,42 @@
+/* Reset + globalne style */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+h1 { font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 800; line-height: 1.15; }
+h2 { font-size: 1.8rem; margin-bottom: 1.5rem; }
+
+a { color: var(--secondary); text-decoration: none; }
+
+code {
+  font-family: var(--font-mono); font-size: 0.9em;
+  background: var(--bg-chip);
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+}
+a:hover { color: var(--primary); }
+
+::selection { background: var(--secondary); color: var(--on-accent); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+/* Pomocnicze klasy */
+.muted  { color: var(--text-muted); }
+.small  { font-size: 0.85rem; }
+.center { text-align: center; }
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
